@@ -13,13 +13,13 @@
 }
 
 h1 {
-    color: #9a41bd;
+    color: #4a0d63;
     font-size: 48px;
     font-family: 'Signika', sans-serif;
 }
 
 h4 {
-    color: #9a41bd;
+    color: #4a0d63;
     font-size: 18px;
     font-family: 'Signika', sans-serif;
     padding: 0px;
@@ -39,7 +39,7 @@ p {
     color: #223;
     font-size: 14px;
     line-height: 24px;
-    margin: 0 0 24px;
+    margin: 0 0 2px;
     text-justify: inter-word;
 }
 
@@ -106,7 +106,7 @@ img {
 
 .container {
     margin: 0 auto;
-    max-width: 840px;
+    max-width: 900px;
     padding: 15px 15px;
     margin-bottom: 0px;
     background-color: white;
@@ -147,9 +147,9 @@ img {
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
     .col.third {
-        width: 100%;
+        width: 90%;
     }
     .col.twothirds {
-        width: 100%;
+        width: 90%;
     }
 }
