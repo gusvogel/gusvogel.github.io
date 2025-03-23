@@ -6,7 +6,7 @@
 }
 
 .bg-image {
-    background-image: url(./Assets/gustaaf.png);
+    background-image: url(./Assets/render4.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -109,7 +109,7 @@ img {
     max-width: 900px;
     padding: 15px 15px;
     margin-bottom: 0px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.87);
 }
 
 .videoWrapper {
