@@ -1,15 +1,38 @@
 ﻿body {
-    background: rgba(211, 211, 211, 0.92);
+    background: rgba(211, 211, 211, 0.92) url(./Assets/render4.jpg) no-repeat fixed;
+    background-size: cover;
     font: 18px/1.4 helvetica;
     margin: 0;
     padding: 0;
 }
 
-.bg-image {
-    background-image: url(./Assets/render4.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+/* Header: avatar, name, links */
+.intro {
+    text-align: center;
+}
+
+.intro h1,
+.intro p {
+    margin: 0;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.container.compact {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.experience {
+    margin-left: 14px;
+}
+
+.gallery {
+    margin-left: 11px;
 }
 
 h1 {
@@ -126,11 +149,24 @@ img {
     height: 94%;
 }
 
+/* Image thumbnails: set the image per element with style="background-image: url(...)" */
 .thumb {
     margin: 4px;
     padding: 0px;
     width: 220px;
     height: 220px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.thumb.full {
+    width: 100%;
+}
+
+.thumb.wide {
+    width: 100%;
+    height: 250px;
 }
 
 .thumb a {
