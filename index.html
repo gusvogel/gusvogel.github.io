@@ -4,156 +4,207 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gus Vogel</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Cormorant+Garamond:wght@500&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script src="site.js" defer></script>
 </head>
 <body>
 
-    <div class="container intro">
-        <img class="avatar" src="./Assets/face.jpg" alt="Gus" />
-        <h1>Gus Vogel</h1>
-        <p>Software engineer with experience in 3D graphics/shaders. SF bay area</p>
-        <p><b>Follow me</b> -> <a href="https://twitter.com/gusvogelnice">https://twitter.com/gusvogelnice</a></p>
-        <p><b>My games</b> -> <a href="https://superessence.itch.io/fightercommand-beta">https://superessence.itch.io/</a></p>
+    <!-- Soft blurred gradient backdrop (fixed behind everything) -->
+    <div class="haze" aria-hidden="true">
+        <svg class="haze-blob" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <filter id="soften" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="70" />
+                </filter>
+                <radialGradient id="core" cx="50%" cy="50%" r="50%">
+                    <stop offset="0" stop-color="#1f6fff" />
+                    <stop offset="0.55" stop-color="#4b93ff" stop-opacity="0.85" />
+                    <stop offset="1" stop-color="#a9c9f7" stop-opacity="0" />
+                </radialGradient>
+            </defs>
+            <g filter="url(#soften)">
+                <ellipse cx="640" cy="560" rx="300" ry="190" fill="url(#core)" transform="rotate(-38 640 560)" />
+                <ellipse cx="760" cy="380" rx="200" ry="120" fill="#8db8f6" opacity="0.7" transform="rotate(-38 760 380)" />
+                <!-- white diagonal sheen, like light across a bottle -->
+                <ellipse cx="380" cy="300" rx="420" ry="70" fill="#ffffff" opacity="0.9" transform="rotate(-38 380 300)" />
+            </g>
+        </svg>
+        <svg class="haze-grain" width="100%" height="100%">
+            <filter id="grain">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+                <feColorMatrix values="0 0 0 0 0.5  0 0 0 0 0.55  0 0 0 0 0.65  0 0 0 0.6 0" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#grain)" />
+        </svg>
     </div>
 
-    <div class="container compact">
-        <div class="row experience">
-            <h3>Experience</h3>
-            <p><b>ServiceNow</b> - 2018-2023, Software Engineer, 2 promotions over 5 years</p>
-            <p><b>BlueDomeTech</b> - 2024, freelance software, data visualization (labelling) tool for driving footage QA</p>
-        </div>
-    </div>
+    <header class="site-header">
+        <a class="wordmark" href="#about">Gus Vogel</a>
+        <nav class="tabs" aria-label="Sections">
+            <a href="#about">About</a>
+            <a href="#mach-speed">Mach Speed</a>
+            <a href="#nightfall">Nightfall</a>
+            <a href="#doom-bloom">Doom &amp; Bloom</a>
+            <a href="#doom-bloom-2">D&amp;B 2</a>
+            <a href="#graphics">Graphics</a>
+            <a href="#links">Links</a>
+        </nav>
+    </header>
 
-    <div class="container">
-        <div class="row">
-            <div class="col third">
-                <p>2026</p>
-                <h3>Mach Speed Intercept</h3>
-                <h4>solo developed multiplayer tactics game</h4>
-                <p><a href="https://store.steampowered.com/app/3438610/Mach_Speed_Intercept/">https://store.steampowered.com/app/3438610/Mach_Speed_Intercept/</a></p>
-                <br/>
-                <p>Simultaneous planning game where you drag to position your fighter planes then watch them fly against an opponent.</p>
-                <p>Growing at 18k wishlists and daily playtesters</p>
-                <br/>
-                <p>Unity, Shaders, Networking</p>
-            </div>
+    <main>
 
-            <div class="col twothirds">
-                <div class="videoWrapper">
-                    <div class="center"><iframe src="https://www.youtube.com/embed/fY1Stgp0UWM" title="Mach Speed Intercept gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <section class="panel" id="about">
+            <h2 class="side-title">about</h2>
+            <div class="panel-body">
+                <div class="info">
+                    <img class="avatar" src="./Assets/face.jpg" alt="Gus Vogel" />
+                    <h3 class="label">Software engineer</h3>
+                    <p class="tags">3D graphics · Shaders · Games<br>SF Bay Area</p>
+                    <p>I build games and real-time graphics. Lately: a solo-developed multiplayer tactics game on Steam, and an HD remake of a flash-era classic.</p>
+                </div>
+                <div class="info">
+                    <p class="eyebrow">Experience</p>
+                    <div class="entry">
+                        <h3 class="label">ServiceNow</h3>
+                        <p class="tags">Software Engineer · 2018–2023</p>
+                        <p>2 promotions over 5 years.</p>
+                    </div>
+                    <div class="entry">
+                        <h3 class="label">BlueDomeTech</h3>
+                        <p class="tags">Freelance · 2024</p>
+                        <p>Data visualization (labelling) tool for driving footage QA.</p>
+                    </div>
+
+                    <p class="eyebrow">Education</p>
+                    <div class="entry">
+                        <h3 class="label">UC San Diego</h3>
+                        <p class="tags">B.S. Computer Engineering</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="container">
-        <div class="row">
-            <div class="col third">
-                <p>2024</p>
-                <h3>Unity Remake Project</h3>
-                <h4>Spybotics: Nightfall Incident</h4>
-                <p>Play it for free on itch.io</p>
-                <p><a href="https://superessence.itch.io/nightfall">https://superessence.itch.io/nightfall</a></p>
-                <br/>
-                <p>I remade the classic web game for modern PCs and web using Unity. Features improved controls, bugfixes, fullscreen responsive pixel UI. I reimagined the old static background art as real-time 3D scenes (see video)</p>
-                <br/>
-                <p>My goal was to release a full game using Unity and to make this flash-era game more easily playable for the community. The remake has been well received and played by thousands.</p>
-            </div>
-
-            <div class="col twothirds">
-                <div class="videoWrapper">
-                    <div class="center"><iframe src="https://www.youtube.com/embed/bjv9bVnHo6k" title="Nightfall Incident HD - all new 3D backdrops" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <section class="panel" id="mach-speed">
+            <h2 class="side-title">mach speed intercept</h2>
+            <div class="panel-body">
+                <div class="info">
+                    <p class="eyebrow">2026</p>
+                    <h3 class="label">Solo-developed multiplayer tactics game</h3>
+                    <p class="tags">Unity · Shaders · Networking</p>
+                    <p>Simultaneous planning game where you drag to position your fighter planes then watch them fly against an opponent.</p>
+                    <p class="muted">18k wishlists and growing<br>Daily playtesters</p>
+                    <a class="cta" href="https://store.steampowered.com/app/3438610/Mach_Speed_Intercept/">Wishlist on Steam</a>
                 </div>
-                <div class="row">
-                    <div class="thumb wide" style="background-image: url(./Assets/spybotics.jpg)"><a href="./Assets/spybotics.jpg"></a></div>
+                <div class="media">
+                    <div class="video"><iframe src="https://www.youtube.com/embed/fY1Stgp0UWM" title="Mach Speed Intercept gameplay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="container">
-        <div class="row">
-            <div class="col third">
-                <p>2018</p>
-                <h3>Custom C++ Game Engine multiplayer "Splatoon-like"</h3>
-                <h4>Doom & Bloom</h4>
-                <p>C++, OpenGL</p>
-                <p>Custom 3D game engine and networked multiplayer game made in 10 weeks. This was still early in my graphics career so I was self-learning most of these concepts for the first time. I contributed the majority of 3D graphics and a lot of gameplay code. Features Splatoon-like gameplay with collaborative texture painting over the network.</p>
-                <p>My contributions include:</p>
-                <ul>
-                    <li>networked virtual texture painting</li>
-                    <li>batched instanced draws and culling</li>
-                    <li>LOD</li>
-                    <li>subsurface scatter shader</li>
-                    <li>interactive foliage and wind vertex shaders</li>
-                    <li>"soft" toon shader</li>
-                    <li>first/third person controls.</li>
-                    <li>particles</li>
+        <section class="panel" id="nightfall">
+            <h2 class="side-title">nightfall incident</h2>
+            <div class="panel-body">
+                <div class="info">
+                    <p class="eyebrow">2024</p>
+                    <h3 class="label">Unity remake of Spybotics: Nightfall Incident</h3>
+                    <p class="tags">Unity · Pixel UI · Real-time 3D</p>
+                    <p>I remade the classic web game for modern PCs and web using Unity. Features improved controls, bugfixes, fullscreen responsive pixel UI. I reimagined the old static background art as real-time 3D scenes (see video).</p>
+                    <p>My goal was to release a full game using Unity and to make this flash-era game more easily playable for the community. The remake has been well received and played by thousands.</p>
+                    <a class="cta" href="https://superessence.itch.io/nightfall">Play free on itch.io</a>
+                </div>
+                <div class="media">
+                    <div class="video"><iframe src="https://www.youtube.com/embed/bjv9bVnHo6k" title="Nightfall Incident HD - all new 3D backdrops" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
+                    <a class="shot" href="./Assets/spybotics.jpg"><img src="./Assets/spybotics.jpg" alt="Nightfall Incident remake screenshot" loading="lazy"></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="doom-bloom">
+            <h2 class="side-title">doom &amp; bloom</h2>
+            <div class="panel-body">
+                <div class="info">
+                    <p class="eyebrow">2018</p>
+                    <h3 class="label">Custom C++ engine, multiplayer "Splatoon-like"</h3>
+                    <p class="tags">C++ · OpenGL</p>
+                    <p>Custom 3D game engine and networked multiplayer game made in 10 weeks. This was still early in my graphics career so I was self-learning most of these concepts for the first time. I contributed the majority of 3D graphics and a lot of gameplay code. Features Splatoon-like gameplay with collaborative texture painting over the network.</p>
+                    <p class="muted">My contributions</p>
+                    <ul class="ticks">
+                        <li>networked virtual texture painting</li>
+                        <li>batched instanced draws and culling</li>
+                        <li>LOD</li>
+                        <li>subsurface scatter shader</li>
+                        <li>interactive foliage and wind vertex shaders</li>
+                        <li>"soft" toon shader</li>
+                        <li>first/third person controls</li>
+                        <li>particles</li>
+                    </ul>
+                    <p>This was an uninstructed team project in the last quarter at UCSD. I'm proud of this game because it is fun and achieves a certain look, given our time constraint and limited knowledge at the time. Not to mention doing 3D models/texture assets myself. We did a good job of scoping our work for the time available so we were never caught without critical features or with an unstable or unperformant build.</p>
+                </div>
+                <div class="media">
+                    <div class="video"><iframe src="https://www.youtube.com/embed/nr8D_TMRx2c" title="Doom & Bloom gameplay" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="grid2">
+                        <a class="shot" href="./Assets/goon.jpg"><img src="./Assets/Thumbs/goon.jpg" alt="Doom & Bloom character" loading="lazy"></a>
+                        <a class="shot" href="./Assets/gustaaf.jpg"><img src="./Assets/Thumbs/gustaaf.jpg" alt="Doom & Bloom character" loading="lazy"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="doom-bloom-2">
+            <h2 class="side-title">doom &amp; bloom 2</h2>
+            <div class="panel-body">
+                <div class="info">
+                    <p class="eyebrow">2019</p>
+                    <h3 class="label">Lite remake in Unreal Engine 4</h3>
+                    <p class="tags">C++ · Unreal Engine 4 · Perforce</p>
+                    <p>Can paint over the network and the core gameplay mechanics of tilling, seeding, and watering are in place. Mostly an experiment to learn multiplayer programming and learning Unreal Engine.</p>
+                </div>
+                <div class="media">
+                    <a class="shot" href="./Assets/ScreenShot00036.jpg"><img src="./Assets/ScreenShot00036.jpg" alt="Doom & Bloom 2 screenshot" loading="lazy"></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="graphics">
+            <h2 class="side-title">graphics</h2>
+            <div class="panel-body">
+                <div class="info">
+                    <p class="eyebrow">2018–2023</p>
+                    <h3 class="label">Custom shaders</h3>
+                    <p class="tags">Shaders · Compute · three.js</p>
+                    <ul class="ticks">
+                        <li>Analog video emulation shaders</li>
+                        <li>Monte Carlo path tracing in a compute shader</li>
+                        <li>Procedural game environment</li>
+                        <li>Interactive mesh editing - triangle edge decimation</li>
+                        <li>2D convolution theory - edge detection, dither, antialiasing</li>
+                        <li>some three.js dev</li>
+                    </ul>
+                </div>
+                <div class="media grid2">
+                    <a class="shot" href="./Assets/sobelbloom.jpg"><img src="./Assets/Thumbs/sobelbloom.jpg" alt="Sobel edge and bloom shader" loading="lazy"></a>
+                    <a class="shot" href="./Assets/render11.jpg"><img src="./Assets/Thumbs/render11.jpg" alt="Path traced render" loading="lazy"></a>
+                    <a class="shot" href="./Assets/CRT.jpg"><img src="./Assets/Thumbs/CRT.jpg" alt="CRT emulation shader" loading="lazy"></a>
+                    <a class="shot" href="./Assets/duo.jpg"><img src="./Assets/duo.jpg" alt="Shader render" loading="lazy"></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="links">
+            <h2 class="side-title">links</h2>
+            <div class="panel-body single">
+                <ul class="link-list">
+                    <li><a href="https://store.steampowered.com/app/3438610/Mach_Speed_Intercept/"><span class="tags">Steam</span>Mach Speed Intercept</a></li>
+                    <li><a href="https://superessence.itch.io/"><span class="tags">itch.io</span>superessence</a></li>
+                    <li><a href="https://twitter.com/gusvogelnice"><span class="tags">Twitter / X</span>@gusvogelnice</a></li>
+                    <li class="email"><span class="tags">Email</span><img src="./Assets/mine.png" alt="Email address" /></li>
                 </ul>
-                <p>This was an uninstructed team project in the last quarter at UCSD. I'm proud of this game because it is fun and achieves a certain look, given our time constraint and limited knowledge at the time. Not to mention doing 3D models/texture assets myself. We did a good job of scoping our work for the time available so we were never caught without critical features or with an unstable or unperformant build. Watch the video to see it in action!</p>
             </div>
+        </section>
 
-            <div class="col twothirds">
-                <div class="videoWrapper">
-                    <div class="center"><iframe src="https://www.youtube.com/embed/nr8D_TMRx2c" title="Doom & Bloom gameplay" frameborder="0" allowfullscreen></iframe></div>
-                </div>
-                <div class="row">
-                    <div class="thumb wide" style="background-image: url(./Assets/goon.jpg)"><a href="./Assets/goon.jpg"></a></div>
-                    <div class="thumb wide" style="background-image: url(./Assets/gustaaf.jpg)"><a href="./Assets/gustaaf.jpg"></a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col third">
-                <p>2019</p>
-                <h3>Doom & Bloom 2</h3>
-                <p>Lite remake of the above game in Unreal Engine 4. Can paint over the network and the core gameplay mechanics of tilling, seeding, and watering are in place. Mostly an experiment to learn multiplayer programming and learning Unreal Engine.</p>
-                <ul>
-                    <li>C++</li>
-                    <li>Unreal Engine 4</li>
-                    <li>Perforce</li>
-                </ul>
-            </div>
-
-            <div class="col twothirds">
-                <div class="thumb full" style="background-image: url(./Assets/ScreenShot00036.jpg)"><a href="./Assets/ScreenShot00036.jpg"></a></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col third">
-                <p>2018-2023</p>
-                <h3>Various Graphics</h3>
-                <p>these images are custom shaders I made</p>
-                <ul>
-                    <li>Analog video emulation shaders</li>
-                    <li>Monte Carlo path tracing in a compute shader</li>
-                    <li>Procedural game environment</li>
-                    <li>Interactive mesh editing - triangle edge decimation</li>
-                    <li>2D convolution theory - edge detection, dither, antialiasing</li>
-                    <li>some three.js dev</li>
-                </ul>
-                <h3>Education</h3>
-                <p>B.S. Computer Engineering <br /> University of California San Diego</p>
-                <img src="./Assets/mine.png" alt="" />
-            </div>
-
-            <div class="col twothirds gallery">
-                <div class="row">
-                    <div class="col thumb" style="background-image: url(./Assets/Thumbs/sobelbloom.jpg)"><a href="./Assets/sobelbloom.jpg"></a></div>
-                    <div class="col thumb" style="background-image: url(./Assets/Thumbs/render11.jpg)"><a href="./Assets/render11.jpg"></a></div>
-                </div>
-                <div class="row">
-                    <div class="col thumb" style="background-image: url(./Assets/Thumbs/CRT.jpg)"><a href="./Assets/CRT.jpg"></a></div>
-                    <div class="col thumb" style="background-image: url(./Assets/duo.jpg)"><a href="./Assets/duo.jpg"></a></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 </body>
 </html>

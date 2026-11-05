@@ -1,191 +1,473 @@
-﻿body {
-    background: rgba(211, 211, 211, 0.92) url(./Assets/render4.jpg) no-repeat fixed;
-    background-size: cover;
-    font: 18px/1.4 helvetica;
+﻿/* ------------------------------------------------------------------
+   Palette: cool off-white bottle, saturated blue haze, ink-black type
+   ------------------------------------------------------------------ */
+:root {
+    --bg: #e9edf2;
+    --ink: #0d0f14;
+    --text: #23293a;
+    --blue: #1a6bf0;
+    --muted: #9aa3b0;
+    --line: rgba(13, 15, 20, 0.12);
+    --header-h: 64px;
+
+    --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --font-mark: 'Cormorant Garamond', Georgia, serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: var(--header-h);
+}
+
+body {
     margin: 0;
-    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 16px/1.6 var(--font-body);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Header: avatar, name, links */
-.intro {
-    text-align: center;
+a {
+    color: inherit;
 }
 
-.intro h1,
-.intro p {
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* ------------------------------------------------------------------
+   Backdrop: blurred SVG blob + film grain, fixed behind the page
+   ------------------------------------------------------------------ */
+.haze {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.haze-blob {
+    position: absolute;
+    inset: -10%;
+    width: 120%;
+    height: 120%;
+    transform: translate(var(--haze-x, 0%), var(--haze-y, 0%));
+    transition: transform 1.4s cubic-bezier(.22, .61, .36, 1);
+    will-change: transform;
+}
+
+.haze-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.18;
+    mix-blend-mode: multiply;
+}
+
+/* ------------------------------------------------------------------
+   Header with section tabs
+   ------------------------------------------------------------------ */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 0 32px;
+    background: rgba(240, 243, 247, 0.72);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+    font-family: var(--font-mark);
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs a {
+    position: relative;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--muted);
+    transition: color .25s;
+}
+
+.tabs a:hover {
+    color: var(--ink);
+}
+
+.tabs a::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 2px;
+    height: 2px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transition: transform .3s;
+}
+
+.tabs a.active {
+    color: var(--blue);
+}
+
+.tabs a.active::after {
+    transform: scaleX(1);
+}
+
+/* ------------------------------------------------------------------
+   Sections: sideways title + content
+   ------------------------------------------------------------------ */
+.panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 48px;
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: calc(var(--header-h) + 48px) 40px 72px;
+    scroll-snap-align: start;
+}
+
+.side-title {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    align-self: start;
+    /* in vertical writing, height is the line length: long titles wrap into a second column */
+    max-height: calc(100vh - var(--header-h) - 150px);
+    height: fit-content;
+    text-align: end; /* after the 180deg turn, "end" is the top: wrapped lines hang from the top */
+    margin: 0;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-stretch: 78%;
+    font-size: clamp(48px, 8.5vh, 104px);
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+}
+
+.panel-body {
+    display: grid;
+    grid-template-columns: minmax(260px, 5fr) 7fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.panel-body.single {
+    grid-template-columns: 1fr;
+}
+
+.info > p {
+    margin: 0 0 14px;
+    max-width: 52ch;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.info .eyebrow:not(:first-child) {
+    margin-top: 36px;
+}
+
+.label {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-stretch: 90%;
+    font-size: 20px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+
+.tags {
+    display: block;
+    margin: 0 0 20px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: var(--blue);
+}
+
+.muted {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.entry {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+}
+
+.entry .tags {
+    margin-bottom: 6px;
+}
+
+.entry p {
     margin: 0;
 }
 
 .avatar {
+    width: 112px;
+    height: 112px;
+    margin-bottom: 24px;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
-}
-
-.container.compact {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.experience {
-    margin-left: 14px;
-}
-
-.gallery {
-    margin-left: 11px;
-}
-
-h1 {
-    color: #4a0d63;
-    font-size: 48px;
-    font-family: 'Signika', sans-serif;
-}
-
-h4 {
-    color: #4a0d63;
-    font-size: 18px;
-    font-family: 'Signika', sans-serif;
-    padding: 0px;
-    margin: 0 0 24px;
-}
-
-h3 {
-    color: #9a41bd;
-    font-size: 20px;
-    font-family: 'Signika', sans-serif;
-    padding: 0px;
-    margin: 0;
-}
-
-p {
-    font-family: 'Signika', sans-serif;
-    color: #223;
-    font-size: 14px;
-    line-height: 24px;
-    margin: 0 0 2px;
-    text-justify: inter-word;
-}
-
-li {
-    font-family: 'Signika', sans-serif;
-    margin-bottom: 0px;
-    font-size: 14px;
-    line-height: 24px;
-    color: #223;
-}
-
-ul {
-    list-style: none; /* Remove default bullets */
-}
-
-ul li::before {
-    content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: #a76fbe;  /* Change the color color: #ff8a00;*/
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: -1em; /* Also needed for space (tweak if needed) */
-}
-
-
-
-.col {
-    float: left;
-    padding: 15px;
-}
-
-.col.half {
-    width: 50%;
-    padding:0px;
-}
-
-.col.third {
-    width: 31%;
-}
-
-.col.twothirds {
-    width: 60%;
-}
-
-.col.fourth {
-    width: 25%;
-}
-
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.center {
-    margin: 0 auto;
-    width: 100%;
-    height: auto;
-}
-
-img {
     object-fit: cover;
+    box-shadow: 0 10px 30px rgba(26, 107, 240, 0.25);
 }
 
-.container {
-    margin: 0 auto;
-    max-width: 900px;
-    padding: 15px 15px;
-    margin-bottom: 0px;
-    background-color: rgba(255, 255, 255, 0.87);
+.ticks {
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
 }
 
-.videoWrapper {
-    position: relative;    
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
+.ticks li {
+    position: relative;
+    padding-left: 18px;
+    line-height: 1.7;
 }
 
-.videoWrapper iframe {
+.ticks li::before {
+    content: "";
     position: absolute;
-    top: 0;
-    left: 19px;
-    width: 94%;
-    height: 94%;
+    left: 0;
+    top: 0.72em;
+    width: 8px;
+    height: 2px;
+    background: var(--blue);
 }
 
-/* Image thumbnails: set the image per element with style="background-image: url(...)" */
-.thumb {
-    margin: 4px;
-    padding: 0px;
-    width: 220px;
-    height: 220px;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.thumb.full {
-    width: 100%;
-}
-
-.thumb.wide {
-    width: 100%;
-    height: 250px;
-}
-
-.thumb a {
+.cta {
     display: inline-block;
+    margin-top: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .2s, transform .2s;
+}
+
+.cta::after {
+    content: " \2192";
+}
+
+.cta:hover {
+    background: var(--blue);
+    transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------------
+   Media
+   ------------------------------------------------------------------ */
+.media {
+    display: grid;
+    gap: 16px;
+}
+
+.video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0d0f14;
+    box-shadow: 0 18px 50px rgba(13, 30, 70, 0.22);
+}
+
+.video iframe {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    border: 0;
 }
 
-.thumb a:hover {
-    opacity: .2;
-    background-color: white;
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
-@media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    .col.third {
-        width: 90%;
+.shot {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 34px rgba(13, 30, 70, 0.16);
+}
+
+.shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+}
+
+.grid2 .shot {
+    aspect-ratio: 1;
+}
+
+.shot:hover img {
+    transform: scale(1.04);
+}
+
+/* ------------------------------------------------------------------
+   Links section
+   ------------------------------------------------------------------ */
+.link-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: 720px;
+}
+
+.link-list li {
+    border-top: 1px solid var(--line);
+}
+
+.link-list li:last-child {
+    border-bottom: 1px solid var(--line);
+}
+
+.link-list a,
+.link-list .email {
+    display: block;
+    padding: 22px 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-stretch: 85%;
+    font-size: clamp(26px, 4vw, 40px);
+    line-height: 1.1;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color .2s, padding-left .3s;
+}
+
+.link-list a::after {
+    content: " \2197";
+    color: var(--blue);
+}
+
+.link-list a:hover {
+    color: var(--blue);
+    padding-left: 10px;
+}
+
+.link-list .tags {
+    margin: 0 0 6px;
+}
+
+.link-list .email img {
+    height: 28px;
+    width: auto;
+    mix-blend-mode: multiply; /* drop the image's white box */
+}
+
+/* ------------------------------------------------------------------
+   Smaller screens
+   ------------------------------------------------------------------ */
+@media (max-width: 900px) {
+    .panel-body {
+        grid-template-columns: 1fr;
+        gap: 32px;
     }
-    .col.twothirds {
-        width: 90%;
+}
+
+@media (max-width: 640px) {
+    :root {
+        --header-h: 96px;
+    }
+
+    .site-header {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 4px;
+        padding: 0 16px;
+    }
+
+    .wordmark {
+        font-size: 22px;
+    }
+
+    .tabs {
+        margin: 0 -16px;
+        padding: 0 8px;
+    }
+
+    .panel {
+        gap: 18px;
+        padding: calc(var(--header-h) + 24px) 16px 48px;
+        min-height: auto;
+    }
+
+    .side-title {
+        font-size: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .haze-blob,
+    .shot img {
+        transition: none;
     }
 }
