@@ -493,8 +493,7 @@ main {
     border-bottom: 1px solid var(--line);
 }
 
-.link-list a,
-.link-list .email {
+.link-list a {
     display: block;
     padding: 22px 0;
     font-family: var(--font-display);
@@ -507,24 +506,19 @@ main {
     transition: color .2s, padding-left .3s;
 }
 
-.link-list a::after {
+/* only real links (the email row has no href until site.js builds it) */
+.link-list a[href]::after {
     content: " \2197";
     color: var(--accent);
 }
 
-.link-list a:hover {
+.link-list a[href]:hover {
     color: var(--accent);
     padding-left: 10px;
 }
 
 .link-list .tags {
     margin: 0 0 6px;
-}
-
-.link-list .email img {
-    height: 28px;
-    width: auto;
-    mix-blend-mode: multiply; /* drop the image's white box */
 }
 
 /* ------------------------------------------------------------------

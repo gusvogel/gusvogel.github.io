@@ -1,3 +1,12 @@
+// Build the email link from its parts, so scrapers reading the raw HTML never see the address.
+(function () {
+    document.querySelectorAll('.email-link').forEach(link => {
+        const address = link.dataset.user + '@' + link.dataset.domain;
+        link.href = 'mailto:' + address;
+        link.querySelector('.email-text').textContent = address;
+    });
+})();
+
 // Highlight the header tab for the section in view, and drift the background haze.
 (function () {
     const tabs = Array.from(document.querySelectorAll('.tabs a'));
