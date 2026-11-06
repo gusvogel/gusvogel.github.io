@@ -37,5 +37,11 @@
     }, { rootMargin: '-40% 0px -59% 0px' });
 
     sections.forEach(section => observer.observe(section));
+
+    // The last section may be too short to reach that line, so pick it at the page bottom
+    window.addEventListener('scroll', () => {
+        const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+        if (atBottom) activate(sections.length - 1);
+    }, { passive: true });
     activate(0);
 })();

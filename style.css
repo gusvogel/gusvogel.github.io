@@ -8,6 +8,8 @@
     --muted: #9aa3b0;
     --line: rgba(13, 15, 20, 0.12);
     --header-h: 64px;
+    --page-max: 1320px; /* wider screens get side panels beyond this */
+    --title-size: 72px; /* sideways section titles */
 
     --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
     --font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
@@ -79,13 +81,15 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
     scroll-padding-top: var(--header-h);
 }
 
+/* Side panels: the area outside the page column on wide screens.
+   Lightly tinted by the section color, so they fade along with it. */
 body {
     margin: 0;
-    background: var(--bg);
+    background: #cdd3dc;
+    background: color-mix(in srgb, var(--haze-core) 10%, #cdd3dc);
     color: var(--text);
     font: 400 16px/1.6 var(--font-body);
     -webkit-font-smoothing: antialiased;
@@ -103,12 +107,28 @@ img {
 /* ------------------------------------------------------------------
    Backdrop: blurred SVG blob + film grain, fixed behind the page
    ------------------------------------------------------------------ */
+/* The page column: the backdrop and header both span exactly this width */
+.haze,
+.site-header {
+    left: 50%;
+    width: min(100%, var(--page-max));
+    transform: translateX(-50%);
+}
+
 .haze {
     position: fixed;
-    inset: 0;
+    top: 0;
+    bottom: 0;
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
+    background: var(--bg);
+    box-shadow: 0 0 80px rgba(13, 30, 70, 0.14);
+}
+
+main {
+    max-width: var(--page-max);
+    margin: 0 auto;
 }
 
 .haze-blob {
@@ -146,8 +166,6 @@ img {
 .site-header {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 10;
     height: var(--header-h);
     display: flex;
@@ -225,33 +243,54 @@ img {
    ------------------------------------------------------------------ */
 .panel {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 48px;
+    /* fixed title column (title + subtitle line) so every section's content lines up */
+    grid-template-columns: calc(var(--title-size) * 1.32) 1fr;
+    gap: 40px;
     max-width: 1200px;
-    min-height: 100vh;
     margin: 0 auto;
-    padding: calc(var(--header-h) + 48px) 40px 72px;
-    scroll-snap-align: start;
+    padding: 64px 40px;
+}
+
+/* first section clears the fixed header */
+.panel:first-child {
+    padding-top: calc(var(--header-h) + 48px);
+}
+
+/* hairline between sections */
+.panel + .panel {
+    border-top: 1px solid var(--line);
 }
 
 .side-title {
     position: sticky;
     top: calc(var(--header-h) + 40px);
     align-self: start;
-    /* in vertical writing, height is the line length: long titles wrap into a second column */
-    max-height: calc(100vh - var(--header-h) - 150px);
-    height: fit-content;
-    text-align: end; /* after the 180deg turn, "end" is the top: wrapped lines hang from the top */
+    white-space: nowrap; /* never wrap: split long names with .side-sub instead */
+    text-align: end; /* after the 180deg turn, "end" is the top: lines hang from the top */
     margin: 0;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     font-family: var(--font-display);
     font-weight: 900;
     font-stretch: 78%;
-    font-size: clamp(48px, 8.5vh, 104px);
+    font-size: var(--title-size);
     line-height: 0.86;
     letter-spacing: -0.02em;
     color: var(--ink);
+}
+
+/* Second, smaller line in the section color (e.g. "intercept").
+   It fits inside the fixed title column, so content never shifts. */
+.side-sub {
+    display: block;
+    margin-block-start: 0.18em;
+    font-size: 0.32em;
+    font-weight: 800;
+    font-stretch: 100%;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
 }
 
 .panel-body {
@@ -522,12 +561,15 @@ img {
 
     .panel {
         gap: 18px;
-        padding: calc(var(--header-h) + 24px) 16px 48px;
-        min-height: auto;
+        padding: 40px 16px;
     }
 
-    .side-title {
-        font-size: 44px;
+    .panel:first-child {
+        padding-top: calc(var(--header-h) + 24px);
+    }
+
+    :root {
+        --title-size: 44px;
     }
 }
 
