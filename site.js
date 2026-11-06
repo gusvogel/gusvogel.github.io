@@ -19,6 +19,9 @@
         const left = tab.offsetLeft - (nav.clientWidth - tab.offsetWidth) / 2;
         nav.scrollTo({ left: left, behavior: 'smooth' });
 
+        // Section colors live in style.css, keyed by this attribute
+        document.documentElement.dataset.section = sections[index].id;
+
         const spot = hazeSpots[index % hazeSpots.length];
         document.documentElement.style.setProperty('--haze-x', spot[0] + '%');
         document.documentElement.style.setProperty('--haze-y', spot[1] + '%');

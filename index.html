@@ -20,14 +20,14 @@
                     <feGaussianBlur stdDeviation="70" />
                 </filter>
                 <radialGradient id="core" cx="50%" cy="50%" r="50%">
-                    <stop offset="0" stop-color="#1f6fff" />
-                    <stop offset="0.55" stop-color="#4b93ff" stop-opacity="0.85" />
-                    <stop offset="1" stop-color="#a9c9f7" stop-opacity="0" />
+                    <stop class="haze-core-stop" offset="0" />
+                    <stop class="haze-core-stop" offset="0.55" stop-opacity="0.75" />
+                    <stop class="haze-soft-stop" offset="1" stop-opacity="0" />
                 </radialGradient>
             </defs>
             <g filter="url(#soften)">
                 <ellipse cx="640" cy="560" rx="300" ry="190" fill="url(#core)" transform="rotate(-38 640 560)" />
-                <ellipse cx="760" cy="380" rx="200" ry="120" fill="#8db8f6" opacity="0.7" transform="rotate(-38 760 380)" />
+                <ellipse cx="760" cy="380" rx="200" ry="120" class="haze-soft-fill" opacity="0.7" transform="rotate(-38 760 380)" />
                 <!-- white diagonal sheen, like light across a bottle -->
                 <ellipse cx="380" cy="300" rx="420" ry="70" fill="#ffffff" opacity="0.9" transform="rotate(-38 380 300)" />
             </g>

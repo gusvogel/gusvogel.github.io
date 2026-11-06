@@ -5,7 +5,6 @@
     --bg: #e9edf2;
     --ink: #0d0f14;
     --text: #23293a;
-    --blue: #1a6bf0;
     --muted: #9aa3b0;
     --line: rgba(13, 15, 20, 0.12);
     --header-h: 64px;
@@ -13,6 +12,65 @@
     --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
     --font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
     --font-mark: 'Cormorant Garamond', Georgia, serif;
+
+    /* Section colors: --haze-core / --haze-soft tint the background blob,
+       --accent is a darker version for text (tags, active tab, buttons).
+       site.js sets data-section on <html> as you scroll; the colors fade
+       between sections because they're registered with @property below. */
+    --haze-core: #1f6fff;
+    --haze-soft: #8db8f6;
+    --accent: #1a6bf0;
+    transition: --haze-core 1.2s ease, --haze-soft 1.2s ease, --accent 1.2s ease;
+}
+
+/* about + links share the original blue */
+:root[data-section="mach-speed"] {
+    --haze-core: #ff6a1a;
+    --haze-soft: #ffc08a;
+    --accent: #c4500c;
+}
+
+:root[data-section="nightfall"] {
+    --haze-core: #7a3cff;
+    --haze-soft: #c3a6ff;
+    --accent: #6a2ee0;
+}
+
+:root[data-section="doom-bloom"] {
+    --haze-core: #18b86a;
+    --haze-soft: #9be3bc;
+    --accent: #0d8048;
+}
+
+:root[data-section="doom-bloom-2"] {
+    --haze-core: #ff3d8b;
+    --haze-soft: #ffb0cf;
+    --accent: #c81e63;
+}
+
+:root[data-section="graphics"] {
+    --haze-core: #00b2c9;
+    --haze-soft: #8fe0ea;
+    --accent: #007f92;
+}
+
+/* Registering the color variables lets the browser animate them */
+@property --haze-core {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #1f6fff;
+}
+
+@property --haze-soft {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #8db8f6;
+}
+
+@property --accent {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #1a6bf0;
 }
 
 * {
@@ -61,6 +119,18 @@ img {
     transform: translate(var(--haze-x, 0%), var(--haze-y, 0%));
     transition: transform 1.4s cubic-bezier(.22, .61, .36, 1);
     will-change: transform;
+}
+
+.haze-core-stop {
+    stop-color: var(--haze-core);
+}
+
+.haze-soft-stop {
+    stop-color: var(--haze-soft);
+}
+
+.haze-soft-fill {
+    fill: var(--haze-soft);
 }
 
 .haze-grain {
@@ -137,13 +207,13 @@ img {
     right: 12px;
     bottom: 2px;
     height: 2px;
-    background: var(--blue);
+    background: var(--accent);
     transform: scaleX(0);
     transition: transform .3s;
 }
 
 .tabs a.active {
-    color: var(--blue);
+    color: var(--accent);
 }
 
 .tabs a.active::after {
@@ -232,7 +302,7 @@ img {
     letter-spacing: 0.04em;
     line-height: 1.35;
     text-transform: uppercase;
-    color: var(--blue);
+    color: var(--accent);
 }
 
 .muted {
@@ -285,7 +355,7 @@ img {
     top: 0.72em;
     width: 8px;
     height: 2px;
-    background: var(--blue);
+    background: var(--accent);
 }
 
 .cta {
@@ -308,7 +378,7 @@ img {
 }
 
 .cta:hover {
-    background: var(--blue);
+    background: var(--accent);
     transform: translateY(-1px);
 }
 
@@ -400,11 +470,11 @@ img {
 
 .link-list a::after {
     content: " \2197";
-    color: var(--blue);
+    color: var(--accent);
 }
 
 .link-list a:hover {
-    color: var(--blue);
+    color: var(--accent);
     padding-left: 10px;
 }
 
@@ -464,6 +534,7 @@ img {
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+        transition: none;
     }
 
     .haze-blob,
