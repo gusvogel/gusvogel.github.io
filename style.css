@@ -178,6 +178,31 @@ main {
     border-bottom: 1px solid var(--line);
 }
 
+/* Name + small X link */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.social {
+    display: flex;
+    flex: none;
+    padding: 4px;
+    color: var(--muted);
+    transition: color .2s;
+}
+
+.social:hover {
+    color: var(--accent);
+}
+
+.social svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
 .wordmark {
     font-family: var(--font-mark);
     font-weight: 500;
